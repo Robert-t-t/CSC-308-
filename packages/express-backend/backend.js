@@ -44,29 +44,48 @@ const users = {
 };
 
 // Step 4 - Getting users by Name
+// Step 7 - Get user(s) by name and Job
 const findUserByName = (name) => {
   return users["users_list"].filter((user) => user["name"] === name);
 };
 
-app.get("/users", (req, res) => {
-  console.log("Hello i am in the users");
-  const name = req.query.name;
+// find user by name and job
+const findUserByNameAndJob = (name, job) => {
+  return users["users_list"].filter(
+    (user) => (user['name'] === name && user['job'] === job)
+  );
+};
 
-  if (name != undefined) {
+app.get("/users", (req, res) => {
+  //console.log("Hello i am in the users");
+  const name = req.query.name;
+  const job = req.query.job;
+  //console.log(`This is the name: ${name}`)
+  //console.log(`This is the job ${job}`);
+  if(name != undefined && job != undefined){
+    //console.log("I am in the namd and job");
+    let result = findUserByNameAndJob(name,job);
+    result =  { users_list: result} ;
+    res.send(result);
+  }
+  else if (name != undefined) {
+    //console.log("I am in the name")
     let result = findUserByName(name);
     result = { users_list: result };
     res.send(result);
   } else {
+    //console.log("i am in the all user")
     res.send(users);
   }
 });
+
 
 // Step 5 - Getting users by id
 const findUserById = (id) => 
   users["users_list"].find((user) => user["id"] === id);
 
 app.get("/users/:id", (req, res) => {
-  console.log("Hello i am in the user/:id");
+  console.log("Hello i am in the user/:id line 69");
   const id = req.params["id"];
   let result = findUserById(id);
   if(result === undefined) {
@@ -90,11 +109,7 @@ app.post("/users", (req,res) => {
   res.send();
 });
 
+
+// step 7
 // Delete
-
-app.delete("/users/:id", (req, res) =>{
-  console.log("I am in delete");
-});
-
-
 
