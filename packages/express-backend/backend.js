@@ -13,36 +13,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-const findUserByName = (name) => {
-  return users["users_list"].filter((user) => user["name"] === name);
-};
-
-app.get("/users", (req, res) => {
-  const name = req.query.name;
-
-  if (name != undefined) {
-    let result = findUserByName(name);
-    result = { users_list: result };
-    res.send(result);
-  } else {
-    res.send(users);
-  }
-});
-
-
-const findUserById = (id) => 
-  users["users_list"].find((user) => user["id"] === id);
-
-app.get("/users/:id", (req, res) => {
-  const id = req.params["id"];
-  let result = findUserById(id);
-  if(result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
-});
-
 const users = {
   users_list: [
     {
@@ -72,3 +42,59 @@ const users = {
     },
   ],
 };
+
+// Step 4 - Getting users by Name
+const findUserByName = (name) => {
+  return users["users_list"].filter((user) => user["name"] === name);
+};
+
+app.get("/users", (req, res) => {
+  console.log("Hello i am in the users");
+  const name = req.query.name;
+
+  if (name != undefined) {
+    let result = findUserByName(name);
+    result = { users_list: result };
+    res.send(result);
+  } else {
+    res.send(users);
+  }
+});
+
+// Step 5 - Getting users by id
+const findUserById = (id) => 
+  users["users_list"].find((user) => user["id"] === id);
+
+app.get("/users/:id", (req, res) => {
+  console.log("Hello i am in the user/:id");
+  const id = req.params["id"];
+  let result = findUserById(id);
+  if(result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
+});
+
+// Step 6 - Using the POST
+const addUser = (user) => {
+  users["users_list"].push(user);
+  console.log("Hello i am the add user function");
+  return user;
+}
+
+app.post("/users", (req,res) => {
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  console.log("I AM IN POST");
+  res.send();
+});
+
+// Delete
+
+app.delete("/users/:id", (req, res) =>{
+  console.log("I am in delete");
+});
+
+
+
