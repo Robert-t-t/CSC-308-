@@ -84,6 +84,7 @@ app.get("/users", (req, res) => {
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
+
 app.get("/users/:id", (req, res) => {
   //console.log("Hello i am in the user/:id line 69");
   const id = req.params["id"];
@@ -119,14 +120,14 @@ const delUserById = (id) => {
 };
 
 app.delete("/users/:id", (req, res) => {
-  console.log("Hello i an im delete")
+  //console.log("Hello i an im delete")
   const id = req.params["id"];
   let result = findUserById(id);
 
-  console.log(`This is the current id ${id}`)
-  console.log(`This is the current result ${result}`)
+  //console.log(`This is the current id ${id}`)
+  //console.log(`This is the current result ${result}`)
   if (result === undefined) {
-    console.log("Faild")
+    //console.log("Faild")
     res.status(404).send("User not found");
   } else {
     users["users_list"] = delUserById(id);
