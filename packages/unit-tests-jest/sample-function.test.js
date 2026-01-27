@@ -58,10 +58,26 @@ test('Testing containNumber 6 -- success', () =>{
     expect(target).toBe(result);
 });
 
-test('Testing containNumber 6 -- success', () =>{
+test('Testing containNumber 7 -- success', () =>{
 
     const target = true;
     const result = myFunction.containsNumber("0");
+
+    expect(target).toBe(result);
+});
+
+test('Testing containNumber 8 -- success', () =>{
+
+    const target = false;
+    const result = myFunction.containsNumber(".");
+
+    expect(target).toBe(result);
+});
+
+test('Testing containNumber 9 -- success', () =>{
+
+    const target = false;
+    const result = myFunction.containsNumber("+");
 
     expect(target).toBe(result);
 });
